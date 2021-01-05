@@ -18,14 +18,14 @@
     height: 100%;
     text-align:center;
     font-size:10rem;
-    
+
     }
 </style>
 @endsection
 @section('content')
 @csrf
 <div class="d-flex flex-column" id="game-field">
-    
+
 </div>
 <h3 id="giliran"></h3>
 @endsection
@@ -42,7 +42,7 @@
                 'id':match_id
             },
             'success':function(data){
-                
+
                 $('#game-field').html(`
                 <div class="d-flex flex-row">
                     <div class="square">
@@ -78,10 +78,15 @@
                     </div>
                 </div>
                 `)
+                if(data.status==='finish') {
+                    if (data.winner == my_id) {$('#giliran').html(`Selamat Anda Menang`)}
+                        else {$('#giliran').html(`Anda Kalah Huhu`)}
+                } else {
                 $('#giliran').html(`Giliran ${data.turn==1?data.first_player.name:data.second_player.name}`)
                 setTimeout(() => {
                     getGameField()
                 }, 500);
+                }
             },
             'error':function(){
                 setTimeout(() => {
@@ -99,14 +104,15 @@
                     data: {_token: $('input[name="_token"]').val(), match_id:match_id,field_no:field_no},
                     dataType: 'JSON',
                     /* remind that 'data' is the response of the AjaxController */
-                    success: function (data) { 
+                    success: function (data) {
                         console.log("success")
+                        console.log(data);
                     },
                     error:function(xhr, textStatus, errorThrown){
                         console.log(errorThrown)
                         console.log(xhr)
                     }
-                }); 
+                });
     }
     $(window).on('load',function(){
         getGameField()

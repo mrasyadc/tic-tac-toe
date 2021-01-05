@@ -51,4 +51,9 @@ class AuthController extends Controller
         return redirect('/login')->with(['type' => 'success', 'message' => 'Berhasil mendaftar']);
     }
 
+    public function prosesLogout(Request $request) {
+        $request->session()->flush();
+        return redirect('/login');
+    }
+
 }

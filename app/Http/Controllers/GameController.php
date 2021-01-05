@@ -13,11 +13,13 @@ class GameController extends Controller
 
     public function getGameField(Request $request){
         $match = Match::with('firstPlayer','secondPlayer')->find($request->id);
-        return response()->json($match); 
+        return response()->json($match);
     }
 
     public function setField(Request $request){
         $match = Match::find($request->match_id);
+        if($match->status=='finish') return 0;
+//        cek match ada
         if(!$match){
             return response(['message'=>'Match not found'],404);
         }
@@ -32,6 +34,19 @@ class GameController extends Controller
             if($match_arr['box_'.$request->field_no]!='#'){
                 return response("Box isn't empty",403);
             }
+            $match_arr['box_'.$request->field_no] = $match->user_1_icon;
+            if($match_arr['box_1']==$match_arr['box_2'] && $match_arr['box_2']==$match_arr['box_3']){
+//                tambahain kondisi
+                if($match_arr['box_1']==$match->user_1_icon){
+                    $match->update([
+                        'box_'.$request->field_no=>$match->user_1_icon,
+                        'turn'=>2,
+                        'status'=>'finish',
+                        'winner'=>$match_arr['user_id_1']
+                    ]);
+                }
+            }
+//            elseif ()
             $match->update([
                 'box_'.$request->field_no=>$match->user_1_icon,
                 'turn'=>2
@@ -48,7 +63,7 @@ class GameController extends Controller
                 'turn'=>1
             ]);
         }
-        
+
         return response(['message'=>'success']);
     }
 }
