@@ -35,7 +35,10 @@ class GameController extends Controller
                 return response("Box isn't empty",403);
             }
             $match_arr['box_'.$request->field_no] = $match->user_1_icon;
-            if($match_arr['box_1']==$match_arr['box_2'] && $match_arr['box_2']==$match_arr['box_3']){
+//            Logic Game
+            if(($match_arr['box_1']==$match_arr['box_2']&& $match_arr['box_2']==$match_arr['box_3']) ||
+                ($match_arr['box_1']==$match_arr['box_4']&& $match_arr['box_1']==$match_arr['box_7']))
+            {
 //                tambahain kondisi
                 if($match_arr['box_1']==$match->user_1_icon){
                     $match->update([
@@ -45,8 +48,31 @@ class GameController extends Controller
                         'winner'=>$match_arr['user_id_1']
                     ]);
                 }
+            } elseif (($match_arr['box_2']==$match_arr['box_5']&& $match_arr['box_2']==$match_arr['box_8']) ||
+                ($match_arr['box_4']==$match_arr['box_5']&& $match_arr['box_4']==$match_arr['box_6']) ||
+                ($match_arr['box_1']==$match_arr['box_5']&& $match_arr['box_1']==$match_arr['box_9']) ||
+                ($match_arr['box_3']==$match_arr['box_5']&& $match_arr['box_3']==$match_arr['box_7']))
+            {
+                if($match_arr['box_5']==$match->user_1_icon){
+                    $match->update([
+                        'box_'.$request->field_no=>$match->user_1_icon,
+                        'turn'=>2,
+                        'status'=>'finish',
+                        'winner'=>$match_arr['user_id_1']
+                    ]);
+                }
+            } elseif (($match_arr['box_3']==$match_arr['box_6']&& $match_arr['box_3']==$match_arr['box_9']) ||
+                ($match_arr['box_7']==$match_arr['box_8']&& $match_arr['box_7']==$match_arr['box_9']))
+            {
+                if($match_arr['box_9']==$match->user_1_icon){
+                    $match->update([
+                        'box_'.$request->field_no=>$match->user_1_icon,
+                        'turn'=>2,
+                        'status'=>'finish',
+                        'winner'=>$match_arr['user_id_1']
+                    ]);
+                }
             }
-//            elseif ()
             $match->update([
                 'box_'.$request->field_no=>$match->user_1_icon,
                 'turn'=>2
@@ -58,6 +84,46 @@ class GameController extends Controller
             if($match_arr['box_'.$request->field_no]!='#'){
                 return response("Box isn't empty",403);
             }
+//            New ADD Mulai Disini
+//            Logic Game
+            if(($match_arr['box_1']==$match_arr['box_2']&& $match_arr['box_2']==$match_arr['box_3']) ||
+                ($match_arr['box_1']==$match_arr['box_4']&& $match_arr['box_1']==$match_arr['box_7']))
+            {
+//                tambahain kondisi
+                if($match_arr['box_1']==$match->user_2_icon){
+                    $match->update([
+                        'box_'.$request->field_no=>$match->user_2_icon,
+                        'turn'=>1,
+                        'status'=>'finish',
+                        'winner'=>$match_arr['user_id_2']
+                    ]);
+                }
+            } elseif (($match_arr['box_2']==$match_arr['box_5']&& $match_arr['box_2']==$match_arr['box_8']) ||
+                ($match_arr['box_4']==$match_arr['box_5']&& $match_arr['box_4']==$match_arr['box_6']) ||
+                ($match_arr['box_1']==$match_arr['box_5']&& $match_arr['box_1']==$match_arr['box_9']) ||
+                ($match_arr['box_3']==$match_arr['box_5']&& $match_arr['box_3']==$match_arr['box_7']))
+            {
+                if($match_arr['box_5']==$match->user_2_icon){
+                    $match->update([
+                        'box_'.$request->field_no=>$match->user_2_icon,
+                        'turn'=>1,
+                        'status'=>'finish',
+                        'winner'=>$match_arr['user_id_2']
+                    ]);
+                }
+            } elseif (($match_arr['box_3']==$match_arr['box_6']&& $match_arr['box_3']==$match_arr['box_9']) ||
+                ($match_arr['box_7']==$match_arr['box_8']&& $match_arr['box_7']==$match_arr['box_9']))
+            {
+                if($match_arr['box_9']==$match->user_2_icon){
+                    $match->update([
+                        'box_'.$request->field_no=>$match->user_2_icon,
+                        'turn'=>1,
+                        'status'=>'finish',
+                        'winner'=>$match_arr['user_id_2']
+                    ]);
+                }
+            }
+//            New ADD Terakhir Disini
             $match->update([
                 'box_'.$request->field_no=>$match->user_2_icon,
                 'turn'=>1
