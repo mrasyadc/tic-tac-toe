@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class ProfileController extends Controller
 {
@@ -24,13 +25,16 @@ class ProfileController extends Controller
     }
 
     public function prosesUpdate(Request $request) {
+
+
         $user = DB::table('users')->where('id', $request->session()->get('id'))->get();
-            if(!Hash::check($request->oldPassword, $user[0]->password)) return redirect('..');
-        DB::table('users')->where('id',$request->id)->update([
+            if(!Hash::check($request->oldPassword, $user[0]->password)) return Redirect::back()->withErrors(['Password lama anda keliru', 'The Message']);
+
+            DB::table('users')->where('id',$request->id)->update([
             'name' => $request->name,
             'password' => Hash::Make($request->newPassword)
         ]);
-        // alihkan halaman ke halaman pegawai
+        // alihkan halaman ke halaman profil
         return redirect('/profile');
     }
 
