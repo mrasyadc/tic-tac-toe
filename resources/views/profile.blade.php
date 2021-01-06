@@ -1,7 +1,12 @@
 @extends('app')
 @section('content')
     @foreach($users as $user)
-        <img src="http://placecorgi.com/250">
+        @if($user->gambar!=NULL)
+        <img src="{{url('/data_file/'.$user->gambar)}}"/>
+        @else
+        <img src="/data_file/avatar.png">
+        @endif
+
         <h1>Nama:{{$user->name}}</h1>
         <h1>Email:{{$user->email}}</h1>
         <h1>Menang:{{$win}}</h1>
