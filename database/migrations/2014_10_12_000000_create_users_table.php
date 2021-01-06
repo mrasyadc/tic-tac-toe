@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->dateTime('last_seen');
             $table->timestamps();
+            $table->string('gambar')->nullable();
         });
     }
 

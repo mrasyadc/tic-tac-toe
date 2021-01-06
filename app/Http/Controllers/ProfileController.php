@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use mysql_xdevapi\Statement;
 
 class ProfileController extends Controller
 {
@@ -38,19 +39,31 @@ class ProfileController extends Controller
         return redirect('/profile');
     }
 
-    public function prosesUpdateFile(Request $request) {
+    public function gambarUpdate(Request $request) {
             $this->validate($request, [
-                'file' => 'required',
-                'keterangan' => 'required',
+                'file' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
             ]);
 
             // menyimpan data file yang diupload ke variabel $file
             $file = $request->file('file');
 
+            $nama_file = time()."_".$file->getClientOriginalName();
+
+            DB::table('users')->where('id',$request->session()->get('id'))->update([
+                'gambar' => $nama_file
+            ]);
+
             // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'data_file';
 
             // upload file
-            $file->move($tujuan_upload,$file->getClientOriginalName());
+            $file->move($tujuan_upload,$nama_file);
+
+//            $user_id=$request->id;
+//            DB::statement("UPDATE `users` SET `gambar` = `{$nama_file}` WHERE `id` = `{$user_id}`");
+//            @dd($nama_file);
+
+
+            return redirect()->back();
         }
 }

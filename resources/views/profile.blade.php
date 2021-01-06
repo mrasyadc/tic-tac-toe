@@ -33,7 +33,12 @@
             <h1 class="text-center text-white mb-3" style="font-size: 60px;">Profile</h1>
             <div class="row justify-content-center">
                 <div class="col-10 col-lg-4 text-center mb-3">
-                    <img src="http://placecorgi.com/250" class="image-fluid" style="border-radius: 50%;">
+                    @if($user->gambar!=NULL)
+                    <img src="{{url('/data_file/'.$user->gambar)}}" class="image-fluid" style="border-radius: 50%;">
+                    @else
+                    <img src="/data_file/avatar.png" class="image-fluid" style="border-radius: 50%;">
+                    @endif
+
                 </div>
                 <div class="w-100 d-block d-lg-none"></div>
                 <div class="col-10 col-lg-6 align-self-center text-center text-lg-left text-white mb-3">

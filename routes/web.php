@@ -29,6 +29,7 @@ Route::middleware(["cekLogin"])->group(function(){
     Route::get('/profile', 'ProfileController@getPlayerProfile');
     Route::get('/edit', 'ProfileController@editPlayerProfile');
     Route::post('/edit/proses', 'ProfileController@prosesUpdate');
+    Route::post('/edit/gambar', 'ProfileController@gambarUpdate');
 
     Route::get('/logout', 'AuthController@prosesLogout');
     });

@@ -13,15 +13,19 @@
         Password Baru <input id="newPassword" type="password" required="required" name="newPassword" onkeyup="check()"/> <br/>
         Retype Password Baru <input id="newPasswordRetyped" type="password" required="required" name="newPasswordRetyped" onkeyup="check()"/> <br/>
         <input type="submit" value="Simpan Data">
-        <a href="..">
-            <button>Batalkan</button></a>
+        <a href=".."><button>Batalkan</button></a>
     </form>
     <div id="alert"></div>
     @if($errors->any())
         <div class="alert alert-danger">{{$errors->first()}}</div>
     @endif
-
-{{--    <p class="alert">{{$message['error']}}</p>--}}
+    <br/>
+    <form action="/edit/gambar" method="post" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        <input type="file" name="file"/><br/>
+        <input type="submit" value="Upload"/>
+    </form>
+    <a href="/profile"><button>Batalkan</button></a>
 @endforeach
 @endsection
 @section('js')
