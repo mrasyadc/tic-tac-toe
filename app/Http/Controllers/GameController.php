@@ -47,8 +47,11 @@ class GameController extends Controller
                         'status'=>'finish',
                         'winner'=>$match_arr['user_id_1']
                     ]);
+                    return 0;
                 }
-            } elseif (($match_arr['box_2']==$match_arr['box_5']&& $match_arr['box_2']==$match_arr['box_8']) ||
+            }
+
+            if (($match_arr['box_2']==$match_arr['box_5']&& $match_arr['box_2']==$match_arr['box_8']) ||
                 ($match_arr['box_4']==$match_arr['box_5']&& $match_arr['box_4']==$match_arr['box_6']) ||
                 ($match_arr['box_1']==$match_arr['box_5']&& $match_arr['box_1']==$match_arr['box_9']) ||
                 ($match_arr['box_3']==$match_arr['box_5']&& $match_arr['box_3']==$match_arr['box_7']))
@@ -61,7 +64,9 @@ class GameController extends Controller
                         'winner'=>$match_arr['user_id_1']
                     ]);
                 }
-            } elseif (($match_arr['box_3']==$match_arr['box_6']&& $match_arr['box_3']==$match_arr['box_9']) ||
+            }
+
+            if (($match_arr['box_3']==$match_arr['box_6']&& $match_arr['box_3']==$match_arr['box_9']) ||
                 ($match_arr['box_7']==$match_arr['box_8']&& $match_arr['box_7']==$match_arr['box_9']))
             {
                 if($match_arr['box_9']==$match->user_1_icon){
@@ -73,26 +78,32 @@ class GameController extends Controller
                     ]);
                 }
             }
-//            elseif ($match_arr['box_1']!='#' &&
-//                $match_arr['box_2']!='#' &&
-//                $match_arr['box_3']!='#' &&
-//                $match_arr['box_4']!='#' &&
-//                $match_arr['box_5']!='#' &&
-//                $match_arr['box_6']!='#' &&
-//                $match_arr['box_7']!='#' &&
-//                $match_arr['box_8']!='#' &&
-//                $match_arr['box_9']!='#')
-//            {
-//                $match->update([
-//                    'turn'=>2,
-//                    'status'=>'finish'
-//                ]);
-//            }
 
+            if ($match_arr['box_1']!='#' &&
+                $match_arr['box_2']!='#' &&
+                $match_arr['box_3']!='#' &&
+                $match_arr['box_4']!='#' &&
+                $match_arr['box_5']!='#' &&
+                $match_arr['box_6']!='#' &&
+                $match_arr['box_7']!='#' &&
+                $match_arr['box_8']!='#' &&
+                $match_arr['box_9']!='#')
+            {
+//                return response()->json("if jalan");
+                $match->update([
+                    'turn'=>2,
+                    'status'=>'finish',
+                    'winner'=>null
+                ]);
+            }
+
+            if ($match->status!='finish'){
             $match->update([
                 'box_'.$request->field_no=>$match->user_1_icon,
                 'turn'=>2
             ]);
+            }
+
         }else{
             if($match->user_id_2!=$request->session()->get('id')[0]){
                 return response("It's not your turn",403);
@@ -113,7 +124,9 @@ class GameController extends Controller
                         'winner'=>$match_arr['user_id_2']
                     ]);
                 }
-            } elseif (($match_arr['box_2']==$match_arr['box_5']&& $match_arr['box_2']==$match_arr['box_8']) ||
+            }
+
+            if (($match_arr['box_2']==$match_arr['box_5']&& $match_arr['box_2']==$match_arr['box_8']) ||
                 ($match_arr['box_4']==$match_arr['box_5']&& $match_arr['box_4']==$match_arr['box_6']) ||
                 ($match_arr['box_1']==$match_arr['box_5']&& $match_arr['box_1']==$match_arr['box_9']) ||
                 ($match_arr['box_3']==$match_arr['box_5']&& $match_arr['box_3']==$match_arr['box_7']))
@@ -126,7 +139,9 @@ class GameController extends Controller
                         'winner'=>$match_arr['user_id_2']
                     ]);
                 }
-            } elseif (($match_arr['box_3']==$match_arr['box_6']&& $match_arr['box_3']==$match_arr['box_9']) ||
+            }
+
+            if (($match_arr['box_3']==$match_arr['box_6']&& $match_arr['box_3']==$match_arr['box_9']) ||
                 ($match_arr['box_7']==$match_arr['box_8']&& $match_arr['box_7']==$match_arr['box_9']))
             {
                 if($match_arr['box_9']==$match->user_2_icon){
@@ -138,29 +153,33 @@ class GameController extends Controller
                     ]);
                 }
             }
-//            elseif ($match_arr['box_1']!='#' &&
-//                $match_arr['box_2']!='#' &&
-//                $match_arr['box_3']!='#' &&
-//                $match_arr['box_4']!='#' &&
-//                $match_arr['box_5']!='#' &&
-//                $match_arr['box_6']!='#' &&
-//                $match_arr['box_7']!='#' &&
-//                $match_arr['box_8']!='#' &&
-//                $match_arr['box_9']!='#')
-//            {
-//                $match->update([
-//                    'turn'=>1,
-//                    'status'=>'finish'
-//                ]);
-//            }
+
+            if ($match_arr['box_1']!='#' &&
+                $match_arr['box_2']!='#' &&
+                $match_arr['box_3']!='#' &&
+                $match_arr['box_4']!='#' &&
+                $match_arr['box_5']!='#' &&
+                $match_arr['box_6']!='#' &&
+                $match_arr['box_7']!='#' &&
+                $match_arr['box_8']!='#' &&
+                $match_arr['box_9']!='#')
+            {
+                $match->update([
+                    'turn'=>1,
+                    'status'=>'finish',
+                    'winner'=>null
+                ]);
+            }
 
 //            Logic Game
 
 //            New ADD Terakhir Disini
+            if($match->status!='finish'){
             $match->update([
                 'box_'.$request->field_no=>$match->user_2_icon,
                 'turn'=>1
             ]);
+            }
         }
 
         return response(['message'=>'success']);

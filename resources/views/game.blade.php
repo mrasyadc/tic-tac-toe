@@ -28,6 +28,7 @@
 
 </div>
 <h3 id="giliran"></h3>
+<a id="kembali" href="/" style="display: none"><button class="btn btn-primary">Kembali Ke Lobby</button></a>
 @endsection
 
 @section('js')
@@ -81,6 +82,7 @@
                     if (data.winner == my_id) {$('#giliran').html(`Selamat Anda Menang`)}
                         else if (data.winner == null) {$('#giliran').html(`Permainan Berakhir Seri`)}
                         else {$('#giliran').html(`Anda Kalah`)}
+                    document.getElementById('kembali').style.display='block';
                 } else {
                 $('#giliran').html(`Giliran ${data.turn==1?data.first_player.name:data.second_player.name}`)
                 setTimeout(() => {
