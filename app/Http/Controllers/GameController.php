@@ -73,6 +73,22 @@ class GameController extends Controller
                     ]);
                 }
             }
+//            elseif ($match_arr['box_1']!='#' &&
+//                $match_arr['box_2']!='#' &&
+//                $match_arr['box_3']!='#' &&
+//                $match_arr['box_4']!='#' &&
+//                $match_arr['box_5']!='#' &&
+//                $match_arr['box_6']!='#' &&
+//                $match_arr['box_7']!='#' &&
+//                $match_arr['box_8']!='#' &&
+//                $match_arr['box_9']!='#')
+//            {
+//                $match->update([
+//                    'turn'=>2,
+//                    'status'=>'finish'
+//                ]);
+//            }
+
             $match->update([
                 'box_'.$request->field_no=>$match->user_1_icon,
                 'turn'=>2
@@ -85,7 +101,6 @@ class GameController extends Controller
                 return response("Box isn't empty",403);
             }
 //            New ADD Mulai Disini
-//            Logic Game
             if(($match_arr['box_1']==$match_arr['box_2']&& $match_arr['box_2']==$match_arr['box_3']) ||
                 ($match_arr['box_1']==$match_arr['box_4']&& $match_arr['box_1']==$match_arr['box_7']))
             {
@@ -123,6 +138,24 @@ class GameController extends Controller
                     ]);
                 }
             }
+//            elseif ($match_arr['box_1']!='#' &&
+//                $match_arr['box_2']!='#' &&
+//                $match_arr['box_3']!='#' &&
+//                $match_arr['box_4']!='#' &&
+//                $match_arr['box_5']!='#' &&
+//                $match_arr['box_6']!='#' &&
+//                $match_arr['box_7']!='#' &&
+//                $match_arr['box_8']!='#' &&
+//                $match_arr['box_9']!='#')
+//            {
+//                $match->update([
+//                    'turn'=>1,
+//                    'status'=>'finish'
+//                ]);
+//            }
+
+//            Logic Game
+
 //            New ADD Terakhir Disini
             $match->update([
                 'box_'.$request->field_no=>$match->user_2_icon,

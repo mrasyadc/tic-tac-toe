@@ -1,26 +1,26 @@
 @extends('app')
 @section('css')
-<style>
-    .square {
-        position:relative;
-        width: 10vw;
-        border:1px solid black;
-    }
+    <style>
+        .square {
+            position:relative;
+            width: 10vw;
+            border:1px solid black;
+        }
 
-    .square:after {
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-    }
-    .content {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    text-align:center;
-    font-size:10rem;
+        .square:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+        }
+        .content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align:center;
+        font-size:10rem;
 
-    }
-</style>
+        }
+    </style>
 @endsection
 @section('content')
 @csrf
@@ -42,7 +42,6 @@
                 'id':match_id
             },
             'success':function(data){
-
                 $('#game-field').html(`
                 <div class="d-flex flex-row">
                     <div class="square">
@@ -80,7 +79,8 @@
                 `)
                 if(data.status==='finish') {
                     if (data.winner == my_id) {$('#giliran').html(`Selamat Anda Menang`)}
-                        else {$('#giliran').html(`Anda Kalah Huhu`)}
+                        else if (data.winner == null) {$('#giliran').html(`Permainan Berakhir Seri`)}
+                        else {$('#giliran').html(`Anda Kalah`)}
                 } else {
                 $('#giliran').html(`Giliran ${data.turn==1?data.first_player.name:data.second_player.name}`)
                 setTimeout(() => {
