@@ -1,29 +1,54 @@
 @extends('app')
 @section('css')
-    <style>
-        .square {
-            position:relative;
-            width: 10vw;
-            border:1px solid black;
-        }
+<style>
+    .square {
+        position: relative;
+        width: 10vw;
+        border: 3px solid;
+        border-color: #F4DFCC;
+    }
 
-        .square:after {
+    .square:after {
         content: "";
         display: block;
         padding-bottom: 100%;
-        }
-        .content {
+    }
+
+    h3 {
+        color: white;
+    }
+
+    .content {
         position: absolute;
         width: 100%;
         height: 100%;
-        text-align:center;
-        font-size:10rem;
+        text-align: center;
+        color: white;
+    }
 
+    @media (min-width: 768px) {
+        .content {
+            font-size: 4rem;
         }
-    </style>
+    }
+
+
+    @media (min-width: 992px) {
+        .content {
+            font-size: 5.5rem;
+        }
+    }
+
+    @media (min-width: 1400px) {
+        .content {
+            font-size: 8rem;
+        }
+    }
+</style>
 @endsection
 @section('content')
 @csrf
+<div class="mt-3"></div>
 <div class="d-flex flex-column" id="game-field">
 
 </div>
@@ -35,14 +60,15 @@
 <script>
     var match_id = '{{$match_id}}'
     var my_id = '{{$my_id}}'
-    function getGameField(){
+
+    function getGameField() {
         $.ajax({
-            'url':"{{url('get-game-field')}}",
-            'method':"GET",
-            'data':{
-                'id':match_id
+            'url': "{{url('get-game-field')}}",
+            'method': "GET",
+            'data': {
+                'id': match_id
             },
-            'success':function(data){
+            'success': function(data) {
                 $('#game-field').html(`
                 <div class="d-flex flex-row">
                     <div class="square">
@@ -78,45 +104,54 @@
                     </div>
                 </div>
                 `)
-                if(data.status==='finish') {
-                    if (data.winner == my_id) {$('#giliran').html(`Selamat Anda Menang`)}
-                        else if (data.winner == null) {$('#giliran').html(`Permainan Berakhir Seri`)}
-                        else {$('#giliran').html(`Anda Kalah`)}
-                    document.getElementById('kembali').style.display='block';
+                if (data.status === 'finish') {
+                    if (data.winner == my_id) {
+                        $('#giliran').html(`Selamat Anda Menang`)
+                    } else if (data.winner == null) {
+                        $('#giliran').html(`Permainan Berakhir Seri`)
+                    } else {
+                        $('#giliran').html(`Anda Kalah`)
+                    }
+                    document.getElementById('kembali').style.display = 'block';
                 } else {
-                $('#giliran').html(`Giliran ${data.turn==1?data.first_player.name:data.second_player.name}`)
-                setTimeout(() => {
-                    getGameField()
-                }, 500);
+                    $('#giliran').html(`Giliran ${data.turn==1?data.first_player.name:data.second_player.name}`)
+                    setTimeout(() => {
+                        getGameField()
+                    }, 500);
                 }
             },
-            'error':function(){
+            'error': function() {
                 setTimeout(() => {
                     getGameField()
                 }, 500);
             }
         })
     }
-    function setField(field_no){
+
+    function setField(field_no) {
         $.ajax({
-                    /* the route pointing to the post function */
-                    url: "{{url('/set-field')}}",
-                    type: 'POST',
-                    /* send the csrf-token and the input to the controller */
-                    data: {_token: $('input[name="_token"]').val(), match_id:match_id,field_no:field_no},
-                    dataType: 'JSON',
-                    /* remind that 'data' is the response of the AjaxController */
-                    success: function (data) {
-                        console.log("success")
-                        console.log(data);
-                    },
-                    error:function(xhr, textStatus, errorThrown){
-                        console.log(errorThrown)
-                        console.log(xhr)
-                    }
-                });
+            /* the route pointing to the post function */
+            url: "{{url('/set-field')}}",
+            type: 'POST',
+            /* send the csrf-token and the input to the controller */
+            data: {
+                _token: $('input[name="_token"]').val(),
+                match_id: match_id,
+                field_no: field_no
+            },
+            dataType: 'JSON',
+            /* remind that 'data' is the response of the AjaxController */
+            success: function(data) {
+                console.log("success")
+                console.log(data);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log(errorThrown)
+                console.log(xhr)
+            }
+        });
     }
-    $(window).on('load',function(){
+    $(window).on('load', function() {
         getGameField()
     })
 </script>

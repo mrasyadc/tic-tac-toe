@@ -34,9 +34,9 @@
             <div class="row justify-content-center">
                 <div class="col-10 col-lg-4 text-center mb-3">
                     @if($user->gambar!=NULL)
-                    <img src="{{url('/data_file/'.$user->gambar)}}" class="image-fluid" style="border-radius: 50%;">
+                    <img src="{{url('/data_file/'.$user->gambar)}}" class="image-fluid" style="border-radius: 50%; width: 100%;height: auto; max-width: 200px;">
                     @else
-                    <img src="/data_file/avatar.png" class="image-fluid" style="border-radius: 50%;">
+                    <img src="/data_file/avatar.png" class="image-fluid" style="border-radius: 50%; width: 100%;height: auto; max-width: 200px;">
                     @endif
 
                 </div>
