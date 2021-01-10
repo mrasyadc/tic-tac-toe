@@ -24,6 +24,7 @@ Route::middleware(["cekLogin"])->group(function(){
 
     Route::post('/send-request','MainController@sendRequest');
     Route::post('/accept-request','MainController@acceptRequest');
+    Route::post('/refuse-request','MainController@refuseRequest');
     Route::post('/set-field','GameController@setField');
 
     Route::get('/profile', 'ProfileController@getPlayerProfile');

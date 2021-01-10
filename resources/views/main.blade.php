@@ -133,7 +133,7 @@
             'success': function(data) {
                 let html = ''
                 data.forEach(element => {
-                    html += `<tr><td>${element.from.name}</td><td><button type="button" class="btn btn-primary" onclick="acceptRequest(${element.id})">Accept Request</button></td></tr>`
+                    html += `<tr><td>${element.from.name}</td><td><button type="button" class="btn btn-primary" onclick="acceptRequest(${element.id})">Accept Request</button><button class="btn btn-danger" onclick="refuseRequest(${element.id})">X</button></td></tr>`
                 });
                 $('#another-request').html(html)
                 setTimeout(() => {
@@ -218,6 +218,27 @@
         });
     }
 
+    function refuseRequest(id) {
+        $.ajax({
+            /* the route pointing to the post function */
+            url: "{{url('/refuse-request')}}",
+            type: 'POST',
+            /* send the csrf-token and the input to the controller */
+            data: {
+                _token: $('input[name="_token"]').val(),
+                id: id
+            },
+            dataType: 'JSON',
+            /* remind that 'data' is the response of the AjaxController */
+            success: function(data) {
+                console.log("success")
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log(errorThrown)
+                console.log(xhr)
+            }
+        });
+    }
     function acceptRequest(id) {
         $.ajax({
             /* the route pointing to the post function */

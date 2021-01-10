@@ -52,6 +52,12 @@ class MainController extends Controller
         return response()->json($requestList);
     }
 
+    public function refuseRequest(Request $request) {
+        $req = AppRequest::find($request->id);
+        $req->status='rejected';
+        $req->save();
+    }
+
     public function acceptRequest(Request $request){
         $req = AppRequest::find($request->id);
         $req->status='accepted';
