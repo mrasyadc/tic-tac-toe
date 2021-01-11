@@ -42,9 +42,9 @@
                 </div>
                 <div class="w-100 d-block d-lg-none"></div>
                 <div class="col-10 col-lg-6 align-self-center text-center text-lg-left text-white mb-3">
-                    <h1 style="font-size: 35px;">Nama: {{$user->name}}</h1>
-                    <h1 style="font-size: 35px;">Email: {{$user->email}}</h1>
-                    <h1 style="font-size: 35px;">Jumlah Main: {{$win+$lose+$draw}}</h1>
+                    <h1 style="font-size: 27px;">Nama: {{$user->name}}</h1>
+                    <h1 style="font-size: 27px;">Email: {{$user->email}}</h1>
+                    <h1 style="font-size: 27px;">Jumlah Main: {{$win+$lose+$draw}}</h1>
                     <div class="stat px-3 mt-3 pt-1">
                         <div class="row justify-content-center text-center">
                             <h1 class="col-10 col-lg-4">Menang: {{$win}}</h1>
@@ -57,9 +57,9 @@
             <div class="cardStatistik">
                 <div class="row justify-content-center text-center">
                     @if($win+$lose+$draw)
-                    <h1 class="col-10 col-4">Rata-rata menang: {{$win*100/($win+$lose+$draw)}}%</h1>
-                    <h1 class="col-10 col-4">Rata-rata kalah: {{$lose*100/($win+$lose+$draw)}}%</h1>
-                    <h1 class="col-10 col-4">Rata-rata seri: {{$draw*100/($win+$lose+$draw)}}%</h1>
+                    <h1 class="col-10 col-4">Rata-rata menang: {{round($win*100/($win+$lose+$draw), 2)}}%</h1>
+                    <h1 class="col-10 col-4">Rata-rata kalah: {{round($lose*100/($win+$lose+$draw), 2)}}%</h1>
+                    <h1 class="col-10 col-4">Rata-rata seri: {{round($draw*100/($win+$lose+$draw), 2)}}%</h1>
                     @endif
                 </div>
             </div>

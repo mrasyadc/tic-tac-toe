@@ -3,7 +3,8 @@
 <style>
     .square {
         position: relative;
-        width: 10vw;
+        width: 25vw;
+        height: 100%;
         border: 3px solid;
         border-color: #F4DFCC;
     }
@@ -28,7 +29,12 @@
 
     @media (min-width: 768px) {
         .content {
-            font-size: 4rem;
+            font-size: 5.5rem;
+        }
+
+        .square {
+            width: 10vw;
+            height: 100%;
         }
     }
 
@@ -49,11 +55,11 @@
 @section('content')
 @csrf
 <div class="mt-3"></div>
-<div class="d-flex flex-column" id="game-field">
+<div class="d-flex flex-column justify-content-center align-items-center" id="game-field">
 
 </div>
-<h3 id="giliran"></h3>
-<a id="kembali" href="/" style="display: none"><button class="btn btn-primary">Kembali Ke Lobby</button></a>
+<h3 id="giliran" style="text-align: center"></h3>
+<a id="kembali" href="/" style="display: none; text-align: center"><button class="btn btn-primary">Kembali Ke Lobby</button></a>
 @endsection
 
 @section('js')
