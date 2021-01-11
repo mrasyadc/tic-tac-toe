@@ -25,9 +25,55 @@
         height: 100%;
         text-align: center;
         color: white;
+        font-size: 8rem;
     }
 
-    @media (min-width: 768px) {
+    @media only screen and (max-width: 376px) {
+        .content {
+            font-size: 3rem;
+        }
+
+        .square {
+            width: 20vw;
+            height: 100%;
+        }
+    }
+
+    @media only screen and (min-width: 377px) {
+        .content {
+            font-size: 4.3rem;
+        }
+
+        .square {
+            width: 20vw;
+            height: 100%;
+        }
+    }
+
+    @media only screen and (min-width: 577px) {
+        .content {
+            font-size: 4.5rem;
+        }
+
+        .square {
+            width: 15vw;
+            height: 100%;
+        }
+    }
+
+
+    @media only screen and (min-width: 768px) {
+        .content {
+            font-size: 4rem;
+        }
+
+        .square {
+            width: 10vw;
+            height: 100%;
+        }
+    }
+
+    @media only screen and (min-width: 992px) {
         .content {
             font-size: 5.5rem;
         }
@@ -38,16 +84,14 @@
         }
     }
 
-
-    @media (min-width: 992px) {
+    @media only screen and (min-width: 1200px) {
         .content {
-            font-size: 5.5rem;
+            font-size: 7rem;
         }
-    }
 
-    @media (min-width: 1400px) {
-        .content {
-            font-size: 8rem;
+        .square {
+            width: 10vw;
+            height: 100%;
         }
     }
 </style>
