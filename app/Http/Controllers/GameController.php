@@ -18,6 +18,8 @@ class GameController extends Controller
 
     public function setField(Request $request){
         $match = Match::find($request->match_id);
+
+        $finish = false;
         if($match->status=='finish') return 0;
 //        cek match ada
         if(!$match){
@@ -47,10 +49,9 @@ class GameController extends Controller
                         'status'=>'finish',
                         'winner'=>$match_arr['user_id_1']
                     ]);
-                    return 0;
                 }
             }
-
+            if(!$finish){
             if (($match_arr['box_2']==$match_arr['box_5']&& $match_arr['box_2']==$match_arr['box_8']) ||
                 ($match_arr['box_4']==$match_arr['box_5']&& $match_arr['box_4']==$match_arr['box_6']) ||
                 ($match_arr['box_1']==$match_arr['box_5']&& $match_arr['box_1']==$match_arr['box_9']) ||
@@ -65,46 +66,51 @@ class GameController extends Controller
                     ]);
                 }
             }
+            }
 
-            if (($match_arr['box_3']==$match_arr['box_6']&& $match_arr['box_3']==$match_arr['box_9']) ||
-                ($match_arr['box_7']==$match_arr['box_8']&& $match_arr['box_7']==$match_arr['box_9']))
-            {
-                if($match_arr['box_9']==$match->user_1_icon){
-                    $match->update([
-                        'box_'.$request->field_no=>$match->user_1_icon,
-                        'turn'=>2,
-                        'status'=>'finish',
-                        'winner'=>$match_arr['user_id_1']
-                    ]);
+            if(!$finish) {
+                if (($match_arr['box_3'] == $match_arr['box_6'] && $match_arr['box_3'] == $match_arr['box_9']) ||
+                    ($match_arr['box_7'] == $match_arr['box_8'] && $match_arr['box_7'] == $match_arr['box_9'])) {
+                    if ($match_arr['box_9'] == $match->user_1_icon) {
+                        $match->update([
+                            'box_'.$request->field_no=>$match->user_1_icon,
+                            'turn' => 2,
+                            'status' => 'finish',
+                            'winner' => $match_arr['user_id_1']
+                        ]);
+                    }
                 }
             }
 
-            if ($match_arr['box_1']!='#' &&
-                $match_arr['box_2']!='#' &&
-                $match_arr['box_3']!='#' &&
-                $match_arr['box_4']!='#' &&
-                $match_arr['box_5']!='#' &&
-                $match_arr['box_6']!='#' &&
-                $match_arr['box_7']!='#' &&
-                $match_arr['box_8']!='#' &&
-                $match_arr['box_9']!='#')
-            {
+            if(!$finish) {
+                if ($match_arr['box_1'] != '#' &&
+                    $match_arr['box_2'] != '#' &&
+                    $match_arr['box_3'] != '#' &&
+                    $match_arr['box_4'] != '#' &&
+                    $match_arr['box_5'] != '#' &&
+                    $match_arr['box_6'] != '#' &&
+                    $match_arr['box_7'] != '#' &&
+                    $match_arr['box_8'] != '#' &&
+                    $match_arr['box_9'] != '#') {
 //                return response()->json("if jalan");
-                $match->update([
-                    'turn'=>2,
-                    'status'=>'finish',
-                    'winner'=>null
-                ]);
+                    $finish = true;
+                    $match->update([
+                        'box_'.$request->field_no=>$match->user_1_icon,
+                        'turn' => 2,
+                        'status' => 'finish',
+                        'winner' => null
+                    ]);
+                }
             }
-
-            if ($match->status!='finish'){
-            $match->update([
+            if (!$finish){
+                $match->update([
                 'box_'.$request->field_no=>$match->user_1_icon,
                 'turn'=>2
             ]);
             }
 
         }else{
+            $finish=false;
             if($match->user_id_2!=$request->session()->get('id')[0]){
                 return response("It's not your turn",403);
             }
@@ -126,56 +132,60 @@ class GameController extends Controller
                 }
             }
 
-            if (($match_arr['box_2']==$match_arr['box_5']&& $match_arr['box_2']==$match_arr['box_8']) ||
-                ($match_arr['box_4']==$match_arr['box_5']&& $match_arr['box_4']==$match_arr['box_6']) ||
-                ($match_arr['box_1']==$match_arr['box_5']&& $match_arr['box_1']==$match_arr['box_9']) ||
-                ($match_arr['box_3']==$match_arr['box_5']&& $match_arr['box_3']==$match_arr['box_7']))
-            {
-                if($match_arr['box_5']==$match->user_2_icon){
-                    $match->update([
-                        'box_'.$request->field_no=>$match->user_2_icon,
-                        'turn'=>1,
-                        'status'=>'finish',
-                        'winner'=>$match_arr['user_id_2']
-                    ]);
+            if(!$finish) {
+                if (($match_arr['box_2'] == $match_arr['box_5'] && $match_arr['box_2'] == $match_arr['box_8']) ||
+                    ($match_arr['box_4'] == $match_arr['box_5'] && $match_arr['box_4'] == $match_arr['box_6']) ||
+                    ($match_arr['box_1'] == $match_arr['box_5'] && $match_arr['box_1'] == $match_arr['box_9']) ||
+                    ($match_arr['box_3'] == $match_arr['box_5'] && $match_arr['box_3'] == $match_arr['box_7'])) {
+                    if ($match_arr['box_5'] == $match->user_2_icon) {
+                        $match->update([
+                            'box_' . $request->field_no => $match->user_2_icon,
+                            'turn' => 1,
+                            'status' => 'finish',
+                            'winner' => $match_arr['user_id_2']
+                        ]);
+                    }
                 }
             }
 
-            if (($match_arr['box_3']==$match_arr['box_6']&& $match_arr['box_3']==$match_arr['box_9']) ||
-                ($match_arr['box_7']==$match_arr['box_8']&& $match_arr['box_7']==$match_arr['box_9']))
-            {
-                if($match_arr['box_9']==$match->user_2_icon){
-                    $match->update([
-                        'box_'.$request->field_no=>$match->user_2_icon,
-                        'turn'=>1,
-                        'status'=>'finish',
-                        'winner'=>$match_arr['user_id_2']
-                    ]);
+            if(!$finish) {
+                if (($match_arr['box_3'] == $match_arr['box_6'] && $match_arr['box_3'] == $match_arr['box_9']) ||
+                    ($match_arr['box_7'] == $match_arr['box_8'] && $match_arr['box_7'] == $match_arr['box_9'])) {
+                    if ($match_arr['box_9'] == $match->user_2_icon) {
+                        $match->update([
+                            'box_' . $request->field_no => $match->user_2_icon,
+                            'turn' => 1,
+                            'status' => 'finish',
+                            'winner' => $match_arr['user_id_2']
+                        ]);
+                    }
                 }
             }
 
-            if ($match_arr['box_1']!='#' &&
-                $match_arr['box_2']!='#' &&
-                $match_arr['box_3']!='#' &&
-                $match_arr['box_4']!='#' &&
-                $match_arr['box_5']!='#' &&
-                $match_arr['box_6']!='#' &&
-                $match_arr['box_7']!='#' &&
-                $match_arr['box_8']!='#' &&
-                $match_arr['box_9']!='#')
-            {
-                $match->update([
-                    'turn'=>1,
-                    'status'=>'finish',
-                    'winner'=>null
-                ]);
+            if(!$finish) {
+                if ($match_arr['box_1'] != '#' &&
+                    $match_arr['box_2'] != '#' &&
+                    $match_arr['box_3'] != '#' &&
+                    $match_arr['box_4'] != '#' &&
+                    $match_arr['box_5'] != '#' &&
+                    $match_arr['box_6'] != '#' &&
+                    $match_arr['box_7'] != '#' &&
+                    $match_arr['box_8'] != '#' &&
+                    $match_arr['box_9'] != '#') {
+                    $finish = true;
+                    $match->update([
+                        'box_' . $request->field_no => $match->user_2_icon,
+                        'turn' => 1,
+                        'status' => 'finish',
+                        'winner' => null
+                    ]);
+                }
             }
 
 //            Logic Game
-
 //            New ADD Terakhir Disini
-            if($match->status!='finish'){
-            $match->update([
+            if(!$finish){
+                $match->update([
                 'box_'.$request->field_no=>$match->user_2_icon,
                 'turn'=>1
             ]);

@@ -163,6 +163,7 @@
                         $('#giliran').html(`Anda Kalah`)
                     }
                     document.getElementById('kembali').style.display = 'block';
+
                 } else {
                     $('#giliran').html(`Giliran ${data.turn==1?data.first_player.name:data.second_player.name}`)
                     setTimeout(() => {
